@@ -18,14 +18,6 @@ private val LightColorPalette = lightColors(
     secondary = SantasGrayColor,
     background = CatskillWhiteColor,
     surface = Color.White,
-
-    /* Other default colors to override
-    background = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
 
 @Composable
@@ -40,7 +32,7 @@ fun SwissquoteTestTheme(
     }
 
     MaterialTheme(
-        colors = colors,
+        colors = colors.copy(),
         typography = Typography,
         shapes = Shapes,
         content = content
