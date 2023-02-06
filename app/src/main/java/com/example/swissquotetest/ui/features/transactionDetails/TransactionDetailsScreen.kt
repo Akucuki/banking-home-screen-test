@@ -1,7 +1,6 @@
 package com.example.swissquotetest.ui.features.transactionDetails
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -17,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.swissquotetest.R
 import com.example.swissquotetest.data.models.domain.TransactionInfo
+import com.example.swissquotetest.ui.features.transactionDetails.composables.CategoryTitle
 import com.example.swissquotetest.ui.theme.StormGrayColor
 
 @Composable
@@ -63,7 +63,7 @@ fun TransactionDetailsScreen(
 }
 
 @Composable
-fun TransactionDetailsContent(
+private fun TransactionDetailsContent(
     modifier: Modifier = Modifier,
     transactionInfo: TransactionInfo,
     onBackClick: () -> Unit
@@ -101,31 +101,5 @@ fun TransactionDetailsContent(
                 style = MaterialTheme.typography.caption
             )
         }
-    }
-}
-
-@Composable
-fun CategoryTitle(modifier: Modifier = Modifier, category: String) {
-    val roundedCornerShape = remember { RoundedCornerShape(50) }
-    Box(modifier = modifier.padding(10.dp), contentAlignment = Alignment.Center) {
-        Divider(
-            modifier = Modifier.fillMaxWidth(),
-            thickness = 2.dp
-        )
-        Text(
-            modifier = Modifier
-                .border(
-                    width = 8.dp,
-                    color = MaterialTheme.colors.surface,
-                    shape = roundedCornerShape
-                )
-                .background(
-                    color = MaterialTheme.colors.background,
-                    shape = roundedCornerShape
-                )
-                .padding(18.dp),
-            text = category,
-            style = MaterialTheme.typography.body2
-        )
     }
 }
