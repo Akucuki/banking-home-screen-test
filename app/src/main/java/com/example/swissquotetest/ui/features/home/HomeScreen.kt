@@ -1,6 +1,7 @@
 package com.example.swissquotetest.ui.features.home
 
 import android.widget.Toast
+import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -71,21 +72,26 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             }
         }
     }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colors.background)
-            .pullRefresh(pullRefreshState)
-            .systemBarsPadding(),
+            .pullRefresh(pullRefreshState),
         contentAlignment = Alignment.TopCenter
     ) {
-        HomeContent(
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-            cards = cards,
-            transactions = transactions,
-            onLockCardClick = viewModel::onLockCardClick,
-            onSettingsClick = viewModel::onSettingsClick
-        )
+        AnimatedVisibility(visible = !isRefreshing, enter = fadeIn(), exit = fadeOut()) {
+            HomeContent(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .systemBarsPadding()
+                    .verticalScroll(rememberScrollState()),
+                cards = cards,
+                transactions = transactions,
+                onLockCardClick = viewModel::onLockCardClick,
+                onSettingsClick = viewModel::onSettingsClick
+            )
+        }
         PullRefreshIndicator(
             refreshing = isRefreshing,
             state = pullRefreshState,
@@ -110,13 +116,7 @@ private fun HomeContent(
         CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
             HorizontalPager(
                 count = cards.size,
-                contentPadding = remember {
-                    PaddingValues(
-                        start = 40.dp,
-                        end = 40.dp,
-                        top = 20.dp
-                    )
-                },
+                contentPadding = remember { PaddingValues(start = 40.dp, end = 40.dp, top = 20.dp) },
             ) { page ->
                 CardPage(cards[page])
             }

@@ -44,9 +44,8 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Destination.Home.route
                     ) {
-                        composable(Destination.Home.route) {
-                            HomeScreen()
-                        }
+                        composable(Destination.Home.route) { HomeScreen() }
+                        composable(Destination.TransactionDetails.route) {  }
                     }
                 }
             }

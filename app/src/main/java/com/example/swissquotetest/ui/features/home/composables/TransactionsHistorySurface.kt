@@ -1,5 +1,6 @@
 package com.example.swissquotetest.ui.features.home.composables
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,10 +34,14 @@ fun TransactionsHistorySurface(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 14.dp, start = 10.dp, end = 10.dp),
+                    .padding(bottom = 6.dp, start = 10.dp, end = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = stringResource(R.string.card_transactions), color = Color.Black, style = MaterialTheme.typography.body1)
+                Text(
+                    text = stringResource(R.string.card_transactions),
+                    color = Color.Black,
+                    style = MaterialTheme.typography.body1
+                )
                 Text(
                     modifier = Modifier.clickable { },
                     text = stringResource(R.string.view_all),
@@ -44,16 +49,15 @@ fun TransactionsHistorySurface(
                     style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Normal)
                 )
             }
-            transactions.forEachIndexed { index, transaction ->
-                TransactionItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    painter = painterResource(R.drawable.ic_services),
-                    name = transaction.merchant,
-                    amount = transaction.amount,
-                    type = stringResource(transaction.type.toStringId()),
-                    onClick = {}
-                )
-                if (index != transactions.lastIndex) Spacer(modifier = Modifier.height(10.dp))
+            Column {
+                transactions.forEach { transaction ->
+                    TransactionItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        painter = painterResource(R.drawable.ic_services),
+                        transactionInfo = transaction,
+                        onClick = {}
+                    )
+                }
             }
         }
     }

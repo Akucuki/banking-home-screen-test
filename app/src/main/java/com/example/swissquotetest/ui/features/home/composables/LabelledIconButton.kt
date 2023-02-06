@@ -2,10 +2,7 @@ package com.example.swissquotetest.ui.features.home.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -31,6 +28,7 @@ fun LabelledIconButton(
 ) {
     Column(
         modifier = modifier
+            .width(84.dp)
             .clip(shape)
             .clickable(onClick = onClick)
             .padding(10.dp),
@@ -39,7 +37,6 @@ fun LabelledIconButton(
     ) {
         Icon(
             modifier = Modifier
-                .size(44.dp)
                 .background(color = Color.White, shape = CircleShape)
                 .padding(10.dp),
             painter = painter,
