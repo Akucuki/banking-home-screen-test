@@ -28,14 +28,14 @@ fun TransactionItem(
     modifier: Modifier = Modifier,
     painter: Painter,
     transactionInfo: TransactionInfo,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
 ) {
     val isGrayedOut = remember { transactionInfo.type == TransactionType.PENDING }
     val textColor = remember { if (isGrayedOut) StormGrayColor else Color.Black }
     val iconColor = remember { if (isGrayedOut) SantasGrayColor else Color.Black }
     Row(
         modifier = modifier
-            .clickable(onClick = onClick)
+            .clickable(onClick = { onClick(transactionInfo.id) })
             .padding(horizontal = 10.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

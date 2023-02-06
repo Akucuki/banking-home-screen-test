@@ -18,6 +18,7 @@ private val LightColorPalette = lightColors(
     secondary = SantasGrayColor,
     background = CatskillWhiteColor,
     surface = Color.White,
+    onSurface = Color.Black
 )
 
 @Composable

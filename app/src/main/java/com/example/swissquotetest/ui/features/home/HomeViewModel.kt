@@ -1,7 +1,6 @@
 package com.example.swissquotetest.ui.features.home
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.swissquotetest.data.models.domain.CardInfo
@@ -30,14 +29,14 @@ class HomeViewModel @Inject constructor(
     private val executedTransactions: Flow<List<TransactionInfo>> = repository.executedTransactions
     private val pendingTransactions: Flow<List<TransactionInfo>> = repository.pendingTransactions
     val transactions = combine(pendingTransactions, executedTransactions) { pending, executed ->
-        (pending + executed).take(3)
+        (pending + executed)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(STATE_SHARING_TIMEOUT),
         listOf()
     )
     private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean> = _isRefreshing //handle.getStateFlow(IS_REFRESHING, false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
     init { refreshData() }
 
@@ -68,4 +67,13 @@ class HomeViewModel @Inject constructor(
     fun onSettingsClick() {
         events.trySend(HomeEvent.ShowSettingsToast)
     }
+
+    fun onViewAllClick() {
+        events.trySend(HomeEvent.ExpandBottomSheet)
+    }
+
+    fun onTransactionClick(transactionId: Int) {
+        events.trySend(HomeEvent.NavigateToTransactionDetails(transactionId))
+    }
+
 }

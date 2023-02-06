@@ -5,12 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -21,16 +18,18 @@ import com.example.swissquotetest.R
 import com.example.swissquotetest.data.models.domain.TransactionInfo
 
 @Composable
-fun TransactionsHistorySurface(
+fun TransactionsHistoryBottomSheet(
     modifier: Modifier = Modifier,
-    transactions: List<TransactionInfo>
+    transactions: List<TransactionInfo>,
+    onViewAllClick: () -> Unit,
+    onTransactionClick: (Int) -> Unit,
+    isExpanded: Boolean
 ) {
-    Surface(
+    LazyColumn(
         modifier = modifier,
-        shape = remember { RoundedCornerShape(18.dp) },
-        color = Color.White
+        contentPadding = WindowInsets.systemBars.asPaddingValues()
     ) {
-        Column(modifier = Modifier.padding(vertical = 10.dp)) {
+        item {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -42,23 +41,23 @@ fun TransactionsHistorySurface(
                     color = Color.Black,
                     style = MaterialTheme.typography.body1
                 )
-                Text(
-                    modifier = Modifier.clickable { },
-                    text = stringResource(R.string.view_all),
-                    color = MaterialTheme.colors.primary,
-                    style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Normal)
-                )
-            }
-            Column {
-                transactions.forEach { transaction ->
-                    TransactionItem(
-                        modifier = Modifier.fillMaxWidth(),
-                        painter = painterResource(R.drawable.ic_services),
-                        transactionInfo = transaction,
-                        onClick = {}
+                AnimatedVisibility(visible = !isExpanded) {
+                    Text(
+                        modifier = Modifier.clickable(onClick = onViewAllClick),
+                        text = stringResource(R.string.view_all),
+                        color = MaterialTheme.colors.primary,
+                        style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Normal)
                     )
                 }
             }
+        }
+        items(items = transactions, key = { it.id }) { transaction ->
+            TransactionItem(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(R.drawable.ic_services),
+                transactionInfo = transaction,
+                onClick = onTransactionClick
+            )
         }
     }
 }

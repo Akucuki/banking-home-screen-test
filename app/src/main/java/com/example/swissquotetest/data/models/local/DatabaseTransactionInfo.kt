@@ -15,16 +15,16 @@ data class DatabaseTransactionInfo(
     val currency: String,
     val timestamp: Int,
     val type: TransactionType
-)
-
-fun List<DatabaseTransactionInfo>.asDomainModel() = map {
-    TransactionInfo(
-        id = it.id,
-        merchant = it.merchant,
-        category = it.category,
-        amount = it.amount,
-        currency = it.currency,
-        timestamp = it.timestamp,
-        type = it.type
+) {
+    fun asDomainModel() = TransactionInfo(
+        id = id,
+        merchant = merchant,
+        category = category,
+        amount = amount,
+        currency = currency,
+        timestamp = timestamp,
+        type = type
     )
 }
+
+fun List<DatabaseTransactionInfo>.asDomainModel() = map { it.asDomainModel() }
