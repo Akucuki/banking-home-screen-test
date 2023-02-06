@@ -5,6 +5,7 @@ import com.example.swissquotetest.data.database.TransactionInfoDao
 import com.example.swissquotetest.data.models.domain.CardInfo
 import com.example.swissquotetest.data.models.domain.TransactionInfo
 import com.example.swissquotetest.data.models.domain.TransactionType
+import com.example.swissquotetest.data.models.local.DatabaseTransactionInfo
 import com.example.swissquotetest.data.models.local.asDomainModel
 import com.example.swissquotetest.data.models.remote.asDatabaseModel
 import com.example.swissquotetest.data.network.TransactionsService
@@ -46,6 +47,12 @@ class TransactionsRepository @Inject constructor(
         withContext(Dispatchers.IO) {
             val transactions = transactionsService.getPendingTransactions()
             transactionInfoDao.insertAll(transactions.asDatabaseModel(TransactionType.PENDING))
+        }
+    }
+
+    suspend fun getTransactionById(id: Int): TransactionInfo? {
+        return withContext(Dispatchers.IO) {
+            transactionInfoDao.loadDatabaseTransactionInfoWithId(id).asDomainModel()
         }
     }
 }

@@ -10,12 +10,9 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.swissquotetest.ui.features.home.HomeScreen
+import com.example.swissquotetest.application.navigation.PopulatedNavHost
 import com.example.swissquotetest.ui.theme.SwissquoteTestTheme
-import com.example.swissquotetest.utils.Destination
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,21 +29,14 @@ class MainActivity : ComponentActivity() {
 
             DisposableEffect(systemUiController, useDarkIcons) {
                 systemUiController.setSystemBarsColor(
-                    color = Color.Transparent,
-                    darkIcons = useDarkIcons
+                    color = Color.Transparent, darkIcons = useDarkIcons
                 )
                 onDispose {}
             }
 
             SwissquoteTestTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    NavHost(
-                        navController = navController,
-                        startDestination = Destination.Home.route
-                    ) {
-                        composable(Destination.Home.route) { HomeScreen() }
-                        composable(Destination.TransactionDetails.route) {  }
-                    }
+                    PopulatedNavHost(navController = navController)
                 }
             }
         }
