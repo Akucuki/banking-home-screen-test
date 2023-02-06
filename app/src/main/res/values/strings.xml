@@ -3,7 +3,7 @@
     <string name="executed">Executed</string>
     <string name="pending">Pending</string>
     <string name="error_no_internet_connection">No internet connection available</string>
-    <string name="card_is_locked">The card is successfully locked</string>
+    <string name="card_is_locked">The card is already locked</string>
     <string name="no_settings_to_show">There\'s no settings to show</string>
     <string name="available_amount">Available amount</string>
     <string name="lock_card">Lock card</string>
